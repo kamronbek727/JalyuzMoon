@@ -182,8 +182,7 @@
         const SUPABASE_KEY = 'sb_publishable_dAQdE-25h3ZEOQrGBowZzA_hmW4FdAG'; 
         
         // --- TELEGRAM CONFIG (UPDATED) ---
-        const TG_TOKEN = "8503036122:AAHPS5kQVzu_gjbmye7i8rBOcYVVqstEkh8";
-        const ADMIN_CHAT_ID = "656488890";
+      
 
         let supabaseClient;
         
@@ -191,7 +190,7 @@
             categories: [],
             products: [],
             orders: [],
-            settings: { phone: "+998 90 123 45 67", telegram_user: "jalyuzi_admin", telegram_chat_id: ADMIN_CHAT_ID },
+            settings: { phone: "+998 91 332 80 09", telegram_user: "jalyuzi_nav", telegram_chat_id: "" },
             cart: JSON.parse(localStorage.getItem('jalyuziCart')) || [],
             user: JSON.parse(localStorage.getItem('jalyuziUser')) || null
         };
@@ -226,7 +225,7 @@
                     if(sets.data) {
                         state.settings = sets.data;
                         // Always ensure the hardcoded ADMIN_CHAT_ID is used if specified in the query
-                        state.settings.telegram_chat_id = ADMIN_CHAT_ID;
+                    
                     }
                 } catch (err) {
                     console.error("Fetch Error:", err);
@@ -493,7 +492,7 @@
                         <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-inner">
                             <label class="block font-bold mb-1 text-sm text-blue-800">Telegram Chat ID (Buyurtmalar uchun)</label>
                             <input type="text" id="set-chat-id" value="${s.telegram_chat_id}" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none">
-                            <p class="text-[10px] text-blue-600 mt-1 italic">Hozirgi sozlama: ${ADMIN_CHAT_ID}</p>
+                            
                         </div>
                         <button onclick="app.saveSettings()" class="w-full bg-primary text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-secondary transition">Saqlash</button>
                     </div>
@@ -620,7 +619,7 @@
                 e.preventDefault();
                 const name = document.getElementById('login-name').value;
                 const phone = document.getElementById('login-phone').value;
-                const user = (name.toLowerCase() === 'admin' && phone === '1') 
+                const user = (name.toLowerCase() === 'admin' && phone === 'moonjalyuzi777') 
                     ? { name: 'Admin', phone, role: 'admin' } 
                     : { name, phone, role: 'user' };
                 
@@ -720,22 +719,20 @@
                 }
             },
 
-            sendToTelegram: async (order) => {
-                const itemsList = order.items.map(i => `▫️ ${i.name} (${i.qty} x ${i.price})`).join('\n');
-                const msg = `📦 <b>Yangi Buyurtma: #${order.id}</b>\n\n👤 <b>Mijoz:</b> ${order.client_name}\n📞 <b>Tel:</b> ${order.client_phone}\n📍 <b>Manzil:</b> ${order.region}, ${order.address}\n\n🛒 <b>Mahsulotlar:</b>\n${itemsList}\n\n💰 <b>Jami: ${parseInt(order.total).toLocaleString()} so'm</b>`;
-                try {
-                    const response = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: msg, parse_mode: 'HTML' })
-                    });
-                    const result = await response.json();
-                    if(!result.ok) {
-                        console.error("Telegram API Error:", result.description);
-                    }
-                } catch (e) { console.error("Network Error:", e); }
-            },
+           sendToTelegram: async (order) => {
+  try {
+    const resp = await fetch("/api/order", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ order })
+    });
 
+    const json = await resp.json();
+    if (!json.ok) console.error("API Error:", json.error);
+  } catch (e) {
+    console.error("Network Error:", e);
+  }
+},
             switchAdminTab: (tab) => {
                 document.querySelectorAll('.admin-tab').forEach(b => {
                     b.classList.remove('bg-primary', 'text-white', 'shadow');
