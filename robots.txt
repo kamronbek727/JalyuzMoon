@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://moonjalyuzi.uz/sitemap.xml
+
