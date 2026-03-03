@@ -1,0 +1,20 @@
+# Moon Jalyuzi - moonjalyuzi.uz
+# robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://moonjalyuzi.uz/sitemap.xml
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Yandex
+User-agent: Yandex
+Allow: /
+
+# Bing
+User-agent: Bingbot
+Allow: /
