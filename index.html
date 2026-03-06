@@ -34,47 +34,55 @@
 
     <!-- ===== STRUCTURED DATA (JSON-LD) Kuchaytirilgan ===== -->
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://moonjalyuzi.uz/#business",
+  "name": "Moon Jalyuzi — Navoiy",
+  "url": "https://moonjalyuzi.uz/",
+  "image": "https://moonjalyuzi.uz/og-image.jpg",
+  "description": "Moon Jalyuzi – Navoiyda sifatli jalyuzi o‘rnatish xizmati. Navoiy shahri va viloyati bo‘ylab zamonaviy jalyuzi modellarini hamyonbop narxlarda taklif etamiz.",
+  "telephone": "+998913328009",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Navoiy shahri, Markaziy bank oldida",
+    "addressLocality": "Navoiy",
+    "addressRegion": "Navoiy viloyati",
+    "postalCode": "210100",
+    "addressCountry": "UZ"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 40.117111,
+    "longitude": 65.372611
+  },
+  "hasMap": "https://www.google.com/maps?q=40.117111,65.372611",
+  "areaServed": {
+    "@type": "City",
+    "name": "Navoiy"
+  },
+  "openingHoursSpecification": [
     {
-      "@context": "https://schema.org",
-      "@type": "HomeAndConstructionBusiness",
-      "name": "Moon Jalyuzi — Navoiy",
-      "description": "Moon Jalyuzi – Navoiyda sifatli jalyuzi o‘rnatish xizmati. Navoiy shahri va viloyati bo‘ylab zamonaviy jalyuzi moon modellarini hamyonbop narxlarda taklif etamiz.",
-      "image": "https://moonjalyuzi.uz/og-image.jpg",
-      "@id": "https://moonjalyuzi.uz",
-      "url": "https://moonjalyuzi.uz",
-      "telephone": "+998913328009",
-      "priceRange": "$$",
-      "areaServed": {
-        "@type": "City",
-        "name": "Navoiy"
-      },
-      "hasMap": "https://www.google.com/maps?q=40.117111,65.372611",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Navoiy shahri, Markaziy bank oldida",
-        "addressLocality": "Navoiy",
-        "addressRegion": "Navoiy viloyati",
-        "postalCode": "210100",
-        "addressCountry": "UZ"
-      },
-"geo": {
-  "@type": "GeoCoordinates",
-  "latitude": 40.117111,
-  "longitude": 65.372611
-},
-      "openingHoursSpecification": [
-        {
-          "@type": "OpeningHoursSpecification",
-          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-          "opens": "09:00",
-          "closes": "20:00"
-        }
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
       ],
-      "sameAs": [
-        "https://t.me/jalyuzi_nav"
-      ]
+      "opens": "09:00",
+      "closes": "20:00"
     }
-    </script>
+  ],
+  "sameAs": [
+    "https://t.me/jalyuzi_nav"
+  ]
+}
+</script>
     <!-- ===== BREADCRUMB STRUCTURED DATA ===== -->
     <script type="application/ld+json">
     {
@@ -265,11 +273,7 @@
     </section>
 
     <!-- FOOTER -->
-    <footer class="bg-gray-900 text-white py-12 mt-auto" itemscope itemtype="https://schema.org/LocalBusiness">
-        <meta itemprop="name" content="Moon Jalyuzi — Navoiy">
-        <meta itemprop="url" content="https://moonjalyuzi.uz">
-        <meta itemprop="addressLocality" content="Navoiy">
-        <meta itemprop="addressCountry" content="UZ">
+    <footer class="bg-gray-900 text-white py-12 mt-auto">
         <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 text-center md:text-left">
             <div>
                 <h2 class="text-2xl font-bold mb-4 text-white">Moon Jalyuzi</h2>
@@ -983,4 +987,3 @@
 </body>
 
 </html>
-
