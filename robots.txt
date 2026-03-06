@@ -7,14 +7,14 @@ Allow: /
 # Sitemap
 Sitemap: https://moonjalyuzi.uz/sitemap.xml
 
-# Google
+# Google Search Console
 User-agent: Googlebot
 Allow: /
 
-# Yandex
+# Yandex Webmaster
 User-agent: Yandex
 Allow: /
 
-# Bing
+# Bing Webmaster
 User-agent: Bingbot
 Allow: /
