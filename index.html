@@ -28,9 +28,21 @@
     <meta property="og:title" content="Moon Jalyuzi — Navoiyda Jalyuzi O‘rnatish">
     <meta property="og:description"
         content="Navoiyda jalyuzi o‘rnatish xizmati: Moon Jalyuzi bilan uyingizni go‘zallashtiring. Sifat kafolati va hamyonbop narxlar.">
-    <meta property="og:image" content="https://moonjalyuzi.uz/og-image.jpg">
+    <meta property="og:image" content="logo.jpg">
+    <link rel="icon" type="image/jpg" href="logo.jpg">
+    <link rel="apple-touch-icon" href="logo.jpg">
     <meta property="og:site_name" content="Moon Jalyuzi — Navoiy">
     <meta property="og:locale" content="uz_UZ">
+
+    <!-- ===== TWITTER CARDS ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Moon Jalyuzi — Navoiyda Jalyuzi O‘rnatish">
+    <meta name="twitter:description"
+        content="Navoiyda sifatli jalyuzi o‘rnatish xizmati. Sifat kafolati va hamyonbop narxlar.">
+    <meta name="twitter:image" content="logo.jpg">
+
+    <!-- ===== MOBILE THEME ===== -->
+    <meta name="theme-color" content="#0f766e">
 
     <!-- ===== STRUCTURED DATA (JSON-LD) Kuchaytirilgan ===== -->
     <script type="application/ld+json">
@@ -40,7 +52,7 @@
   "@id": "https://moonjalyuzi.uz/#business",
   "name": "Moon Jalyuzi — Navoiy",
   "url": "https://moonjalyuzi.uz/",
-  "image": "https://moonjalyuzi.uz/og-image.jpg",
+  "image": "https://moonjalyuzi.uz/logo.jpg",
   "description": "Moon Jalyuzi – Navoiyda sifatli jalyuzi o‘rnatish xizmati. Navoiy shahri va viloyati bo‘ylab zamonaviy jalyuzi modellarini hamyonbop narxlarda taklif etamiz.",
   "telephone": "+998913328009",
   "priceRange": "$$",
@@ -159,6 +171,27 @@
             }
         }
 
+        .logo-pulse {
+            animation: pulse 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: scale(0.95);
+                opacity: 0.8;
+            }
+        }
+
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -181,7 +214,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center cursor-pointer" onclick="app.navigate('home')">
-                    <i class="fa-solid fa-blinds text-primary text-2xl mr-2"></i>
+                    <img src="logo.jpg" alt="Moon Jalyuzi Logo" class="h-10 w-auto mr-2">
                     <span class="font-bold text-xl text-gray-800">Jalyuzi<span class="text-primary">Moon</span></span>
                 </div>
                 <div class="flex items-center space-x-4">
@@ -209,8 +242,7 @@
 
     <!-- LOADING OVERLAY -->
     <div id="loading" class="fixed inset-0 bg-white z-[60] flex flex-col justify-center items-center">
-        <div class="loader mb-4"></div>
-        <p class="text-gray-500">Yuklanmoqda...</p>
+        <img src="logo.jpg" alt="Loading..." class="w-48 h-48 logo-pulse mb-4">
     </div>
 
     <!-- MAIN CONTENT -->
@@ -219,25 +251,39 @@
     <!-- SEO CONTENT SECTION -->
     <section class="bg-gray-100 py-16 px-4" id="about-section" aria-label="Moon Jalyuzi haqida ma'lumot">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center">Moon Jalyuzi — Navoiyda Sifatli Jalyuzi O‘rnatish Xizmati</h1>
+            <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-8 text-center">Moon Jalyuzi — Navoiyda
+                Sifatli Jalyuzi O‘rnatish Xizmati</h1>
 
             <div class="prose prose-teal max-w-none text-gray-700 leading-relaxed space-y-6">
                 <p>
-                    <strong>Moon Jalyuzi</strong> – Navoiy viloyatida jalyuzi xizmatlarini ko‘rsatuvchi eng ishonchli va tajribali mutaxassislardan biri hisoblanadi. Agar siz o‘z xonadoningiz yoki ofisingiz uchun zamonaviy va sifatli <strong>jalyuzi Navoiy</strong> shahrida qidirayotgan bo‘lsangiz, bizning jamoamiz professional darajada xizmat ko‘rsatadi. Biz ko‘p yillik tajribamiz va mijozlarimizning ishonchi tufayli <strong>Navoiy jalyuzi</strong> bozorida o‘z o‘rnimizga egamiz.
+                    <strong>Moon Jalyuzi</strong> – Navoiy viloyatida jalyuzi xizmatlarini ko‘rsatuvchi eng ishonchli va
+                    tajribali mutaxassislardan biri hisoblanadi. Agar siz o‘z xonadoningiz yoki ofisingiz uchun
+                    zamonaviy va sifatli <strong>jalyuzi Navoiy</strong> shahrida qidirayotgan bo‘lsangiz, bizning
+                    jamoamiz professional darajada xizmat ko‘rsatadi. Biz ko‘p yillik tajribamiz va mijozlarimizning
+                    ishonchi tufayli <strong>Navoiy jalyuzi</strong> bozorida o‘z o‘rnimizga egamiz.
                 </p>
 
                 <h2 class="text-2xl font-bold text-gray-800 mt-8">Nega aynan Moon Jalyuzi tanlanadi?</h2>
                 <p>
-                    <strong>Jalyuzi Moon</strong> brendi ostida taqdim etilayotgan mahsulotlar nafaqat quyosh nurlaridan himoya qiladi, balki interyeringizga o‘zgacha ko‘rk bag‘ishlaydi. Biz har bir mijoz uchun alohida yondashuvni va yuqori darajadagi servisni kafolatlaymiz. Sifatli material va hamyonbop narxlar bo‘yicha eng yaxshi takliflarni aynan <strong>Moon Jalyuzi</strong> jamoasidan topishingiz mumkin.
+                    <strong>Jalyuzi Moon</strong> brendi ostida taqdim etilayotgan mahsulotlar nafaqat quyosh nurlaridan
+                    himoya qiladi, balki interyeringizga o‘zgacha ko‘rk bag‘ishlaydi. Biz har bir mijoz uchun alohida
+                    yondashuvni va yuqori darajadagi servisni kafolatlaymiz. Sifatli material va hamyonbop narxlar
+                    bo‘yicha eng yaxshi takliflarni aynan <strong>Moon Jalyuzi</strong> jamoasidan topishingiz mumkin.
                 </p>
 
                 <h2 class="text-2xl font-bold text-gray-800 mt-8">Navoiyda jalyuzi o‘rnatish xizmatlari</h2>
                 <p>
-                    Bizning mahsulotlarimiz yuqori sifatli materiallardan tayyorlanadi. Mutaxassislarimiz <strong>navoiyda jalyuzi o'rnatish</strong> xizmatini tez, ozoda va kafolatli bajarib berishadi. Biz o‘lcham olishdan tortib, to‘liq o‘rnatib topshirishgacha bo‘lgan barcha jarayonlarni o‘z zimmamizga olamiz. <strong>Navoiy jalyuzi</strong> mutaxassislari orasida bizning asosiy ustunligimiz — bu tajriba va zamonaviy yondashuvdir.
+                    Bizning mahsulotlarimiz yuqori sifatli materiallardan tayyorlanadi. Mutaxassislarimiz
+                    <strong>navoiyda jalyuzi o'rnatish</strong> xizmatini tez, ozoda va kafolatli bajarib berishadi. Biz
+                    o‘lcham olishdan tortib, to‘liq o‘rnatib topshirishgacha bo‘lgan barcha jarayonlarni o‘z zimmamizga
+                    olamiz. <strong>Navoiy jalyuzi</strong> mutaxassislari orasida bizning asosiy ustunligimiz — bu
+                    tajriba va zamonaviy yondashuvdir.
                 </p>
 
                 <p>
-                    <strong>Moon Jalyuzi Navoiy</strong> jamoasi doimo yangilikka intiladi. Ishonchimiz komilki, <strong>Jalyuzi Moon</strong> mahsulotlari xonadoningiz shinamligini yanada oshiradi. Tanlovda adashmang, uyingiz uchun eng yaxshi jalyuzilarni tanlang!
+                    <strong>Moon Jalyuzi Navoiy</strong> jamoasi doimo yangilikka intiladi. Ishonchimiz komilki,
+                    <strong>Jalyuzi Moon</strong> mahsulotlari xonadoningiz shinamligini yanada oshiradi. Tanlovda
+                    adashmang, uyingiz uchun eng yaxshi jalyuzilarni tanlang!
                 </p>
             </div>
         </div>
@@ -258,15 +304,10 @@
                 </div>
                 <div class="rounded-xl overflow-hidden shadow-lg border h-80">
                     <!-- Google Maps Embed -->
-                    <iframe
-  src="https://www.google.com/maps?q=40.117111,65.372611&z=16&output=embed"
-  width="100%"
-  height="100%"
-  style="border:0;"
-  allowfullscreen=""
-  loading="lazy"
-  referrerpolicy="no-referrer-when-downgrade">
-</iframe>
+                    <iframe src="https://www.google.com/maps?q=40.117111,65.372611&z=16&output=embed" width="100%"
+                        height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
         </div>
@@ -382,13 +423,8 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- SUPABASE CONFIG ---
-        const SUPABASE_URL = 'https://lrwkisckahttxijkscbg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_dAQdE-25h3ZEOQrGBowZzA_hmW4FdAG';
-
-        // --- TELEGRAM CONFIG (UPDATED) ---
-        const TG_TOKEN = "8503036122:AAHPS5kQVzu_gjbmye7i8rBOcYVVqstEkh8";
-        const ADMIN_CHAT_ID = "656488890";
+        // --- BACKEND CONFIG ---
+        const API_BASE = window.location.origin; // Same origin if served by FastAPI
 
         let supabaseClient;
 
@@ -396,7 +432,7 @@
             categories: [],
             products: [],
             orders: [],
-            settings: { phone: "+998 91 332 80 09", telegram_user: "jalyuzi_nav", telegram_chat_id: ADMIN_CHAT_ID },
+            settings: { phone: "+998 91 332 80 09", telegram_user: "jalyuzi_nav" },
             cart: JSON.parse(localStorage.getItem('jalyuziCart')) || [],
             user: JSON.parse(localStorage.getItem('jalyuziUser')) || null
         };
@@ -404,7 +440,6 @@
         const app = {
             init: async () => {
                 try {
-                    supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
                     await app.fetchData();
                     app.checkAuth();
                     app.updateCartCount();
@@ -419,19 +454,18 @@
 
             fetchData: async () => {
                 try {
-                    const [cats, prods, sets] = await Promise.all([
-                        supabaseClient.from('categories').select('*'),
-                        supabaseClient.from('products').select('*'),
-                        supabaseClient.from('settings').select('*').single()
+                    const [catsResp, prodsResp, setsResp] = await Promise.all([
+                        fetch(`${API_BASE}/api/categories`),
+                        fetch(`${API_BASE}/api/products`),
+                        fetch(`${API_BASE}/api/settings`)
                     ]);
 
-                    state.categories = cats.data || [];
-                    state.products = prods.data || [];
+                    state.categories = await catsResp.json();
+                    state.products = await prodsResp.json();
 
-                    if (sets.data) {
-                        state.settings = sets.data;
-                        // Always ensure the hardcoded ADMIN_CHAT_ID is used if specified in the query
-                        state.settings.telegram_chat_id = ADMIN_CHAT_ID;
+                    const setsData = await setsResp.json();
+                    if (setsData) {
+                        state.settings = setsData;
                     }
                 } catch (err) {
                     console.error("Fetch Error:", err);
@@ -639,12 +673,10 @@
                 const content = document.getElementById('admin-content');
                 content.innerHTML = '<div class="loader mx-auto mt-10"></div>';
 
-                const { data: orders, error } = await supabaseClient.from('orders').select('*').order('created_at', { ascending: false });
-
-                if (error) {
-                    content.innerHTML = `<p class="text-red-500">Xatolik: ${error.message}</p>`;
-                    return;
-                }
+                const response = await fetch(`${API_BASE}/api/orders`, {
+                    headers: { 'X-Admin-Password': state.user.password }
+                });
+                const orders = await response.json();
 
                 let html = `<h2 class="text-xl font-bold mb-6">Buyurtmalar tarixi</h2>`;
                 if (!orders || orders.length === 0) {
@@ -711,8 +743,15 @@
             completeOrder: async (id) => {
                 if (!confirm("Haqiqatan ham buyurtma bajarildimi?")) return;
 
-                const { error } = await supabaseClient.from('orders').update({ status: 'completed' }).eq('id', id);
-                if (error) alert("Xatolik: " + error.message);
+                const response = await fetch(`${API_BASE}/api/orders/${id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Password': state.user.password
+                    },
+                    body: JSON.stringify({ status: 'completed' })
+                });
+                if (!response.ok) alert("Xatolik yuz berdi");
                 else {
                     app.renderAdminOrders();
                 }
@@ -721,8 +760,15 @@
             addCategory: async () => {
                 const name = document.getElementById('new-cat-name').value;
                 if (!name) return;
-                const { error } = await supabaseClient.from('categories').insert([{ name }]);
-                if (error) alert(error.message);
+                const response = await fetch(`${API_BASE}/api/categories`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Password': state.user.password
+                    },
+                    body: JSON.stringify({ name })
+                });
+                if (!response.ok) alert("Xatolik");
                 else { await app.fetchData(); app.renderAdminCategories(); }
             },
 
@@ -730,14 +776,24 @@
                 const cat = state.categories.find(c => c.id == id);
                 const newName = prompt("Yangi nom:", cat.name);
                 if (newName && newName !== cat.name) {
-                    await supabaseClient.from('categories').update({ name: newName }).eq('id', id);
+                    await fetch(`${API_BASE}/api/categories/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Admin-Password': state.user.password
+                        },
+                        body: JSON.stringify({ name: newName })
+                    });
                     await app.fetchData(); app.renderAdminCategories();
                 }
             },
 
             deleteCategory: async (id) => {
                 if (!confirm("Bo'limni o'chirsangiz, unga tegishli mahsulotlar ko'rinmay qolishi mumkin. O'chirilsinmi?")) return;
-                await supabaseClient.from('categories').delete().eq('id', id);
+                await fetch(`${API_BASE}/api/categories/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'X-Admin-Password': state.user.password }
+                });
                 await app.fetchData(); app.renderAdminCategories();
             },
 
@@ -780,12 +836,18 @@
                     img: document.getElementById('pf-img').value,
                     description: document.getElementById('pf-desc').value
                 };
+                if (id) data.id = parseInt(id);
 
-                let error;
-                if (id) error = (await supabaseClient.from('products').update(data).eq('id', id)).error;
-                else error = (await supabaseClient.from('products').insert([data])).error;
+                const response = await fetch(`${API_BASE}/api/products`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Password': state.user.password
+                    },
+                    body: JSON.stringify(data)
+                });
 
-                if (error) alert(error.message);
+                if (!response.ok) alert("Xatolik");
                 else {
                     document.getElementById('product-form-modal').classList.add('hidden');
                     await app.fetchData();
@@ -795,7 +857,10 @@
 
             deleteProduct: async (id) => {
                 if (confirm("Haqiqatan ham ushbu mahsulotni o'chirmoqchimisiz?")) {
-                    await supabaseClient.from('products').delete().eq('id', id);
+                    await fetch(`${API_BASE}/api/products/${id}`, {
+                        method: 'DELETE',
+                        headers: { 'X-Admin-Password': state.user.password }
+                    });
                     await app.fetchData(); app.renderAdminProducts();
                 }
             },
@@ -803,20 +868,19 @@
             saveSettings: async () => {
                 const data = {
                     phone: document.getElementById('set-phone').value,
-                    telegram_user: document.getElementById('set-tg').value,
-                    telegram_chat_id: document.getElementById('set-chat-id').value
+                    telegram_user: document.getElementById('set-tg').value
                 };
 
-                const { data: exist } = await supabaseClient.from('settings').select('id').limit(1);
+                const response = await fetch(`${API_BASE}/api/settings`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Admin-Password': state.user.password
+                    },
+                    body: JSON.stringify(data)
+                });
 
-                let error;
-                if (exist && exist.length > 0) {
-                    error = (await supabaseClient.from('settings').update(data).eq('id', exist[0].id)).error;
-                } else {
-                    error = (await supabaseClient.from('settings').insert([data])).error;
-                }
-
-                if (error) alert(error.message);
+                if (!response.ok) alert("Xatolik");
                 else {
                     state.settings = data;
                     app.updateContactInfo();
@@ -824,18 +888,32 @@
                 }
             },
 
-            handleLogin: (e) => {
+            handleLogin: async (e) => {
                 e.preventDefault();
                 const name = document.getElementById('login-name').value;
-                const phone = document.getElementById('login-phone').value;
-                const user = (name.toLowerCase() === 'admin' && phone === 'moonjalyuzi777')
-                    ? { name: 'Admin', phone, role: 'admin' }
-                    : { name, phone, role: 'user' };
+                const password = document.getElementById('login-phone').value;
 
-                state.user = user;
-                localStorage.setItem('jalyuziUser', JSON.stringify(user));
-                app.navigate(user.role === 'admin' ? 'admin' : 'home');
-                app.checkAuth();
+                try {
+                    const response = await fetch(`${API_BASE}/api/login`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ name, password })
+                    });
+                    const res = await response.json();
+
+                    if (res.status === 'success') {
+                        if (res.role === 'admin') {
+                            state.user = { name: 'Admin', role: 'admin', password: res.password };
+                        } else {
+                            state.user = { name: res.name || name, role: 'user', phone: res.phone || password };
+                        }
+                        localStorage.setItem('jalyuziUser', JSON.stringify(state.user));
+                        app.navigate(res.role === 'admin' ? 'admin' : 'home');
+                        app.checkAuth();
+                    }
+                } catch (err) {
+                    console.error("Login error:", err);
+                }
             },
 
             addToCart: (id) => {
@@ -909,39 +987,33 @@
                     status: 'new'
                 };
 
-                const { data: newOrder, error } = await supabaseClient.from('orders').insert([order]).select();
+                try {
+                    const response = await fetch(`${API_BASE}/api/order`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(order)
+                    });
+                    const res = await response.json();
 
-                if (error) {
-                    alert("Xatolik: " + error.message);
+                    if (res.status === 'success') {
+                        state.cart = [];
+                        localStorage.setItem('jalyuziCart', '[]');
+                        app.closeCheckout();
+                        alert("Buyurtmangiz muvaffaqiyatli qabul qilindi! Tez orada bog'lanamiz.");
+                        app.navigate('home');
+                        app.updateCartCount();
+                    } else {
+                        alert("Xatolik: " + (res.detail || "Noma'lum xatolik"));
+                        btn.disabled = false; btn.innerText = originalText;
+                    }
+                } catch (err) {
+                    console.error("Order error:", err);
                     btn.disabled = false; btn.innerText = originalText;
-                } else {
-                    const savedOrder = newOrder[0];
-                    // Always use ADMIN_CHAT_ID from config for submission
-                    await app.sendToTelegram({ ...order, id: savedOrder.id });
-
-                    state.cart = [];
-                    localStorage.setItem('jalyuziCart', '[]');
-                    app.closeCheckout();
-                    alert("Buyurtmangiz muvaffaqiyatli qabul qilindi! Tez orada bog'lanamiz.");
-                    app.navigate('home');
-                    app.updateCartCount();
                 }
             },
 
             sendToTelegram: async (order) => {
-                const itemsList = order.items.map(i => `▫️ ${i.name} (${i.qty} x ${i.price})`).join('\n');
-                const msg = `📦 <b>Yangi Buyurtma: #${order.id}</b>\n\n👤 <b>Mijoz:</b> ${order.client_name}\n📞 <b>Tel:</b> ${order.client_phone}\n📍 <b>Manzil:</b> ${order.region}, ${order.address}\n\n🛒 <b>Mahsulotlar:</b>\n${itemsList}\n\n💰 <b>Jami: ${parseInt(order.total).toLocaleString()} so'm</b>`;
-                try {
-                    const response = await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: msg, parse_mode: 'HTML' })
-                    });
-                    const result = await response.json();
-                    if (!result.ok) {
-                        console.error("Telegram API Error:", result.description);
-                    }
-                } catch (e) { console.error("Network Error:", e); }
+                // Now handled by the backend!
             },
 
             switchAdminTab: (tab) => {
