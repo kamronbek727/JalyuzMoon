@@ -423,10 +423,15 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // --- BACKEND CONFIG ---
-        const API_BASE = window.location.origin; // Same origin if served by FastAPI
+        // --- SUPABASE & TELEGRAM CONFIG ---
+        const SUPABASE_URL = 'https://lrwkisckahttxijkscbg.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_dAQdE-25h3ZEOQrGBowZzA_hmW4FdAG'; // Ensure this is the correct public/anon key
+        const TELEGRAM_TOKEN = '8503036122:AAHPS5kQVzu_gjbmye7i8rBOcYVVqstEkh8';
+        const ADMIN_CHAT_ID = '656488890';
+        const ADMIN_PASSWORD_VAL = 'adminjalyuzimoon777';
 
-        let supabaseClient;
+        const { createClient } = supabase;
+        const _supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const state = {
             categories: [],
@@ -454,19 +459,18 @@
 
             fetchData: async () => {
                 try {
-                    const [catsResp, prodsResp, setsResp] = await Promise.all([
-                        fetch(`${API_BASE}/api/categories`),
-                        fetch(`${API_BASE}/api/products`),
-                        fetch(`${API_BASE}/api/settings`)
-                    ]);
+                    // Fetch Categories
+                    const { data: cats, error: catsErr } = await _supabase.from('categories').select('*').order('id');
+                    if (cats) state.categories = cats;
 
-                    state.categories = await catsResp.json();
-                    state.products = await prodsResp.json();
+                    // Fetch Products
+                    const { data: prods, error: prodsErr } = await _supabase.from('products').select('*').order('id');
+                    if (prods) state.products = prods;
 
-                    const setsData = await setsResp.json();
-                    if (setsData) {
-                        state.settings = setsData;
-                    }
+                    // Fetch Settings (Mock or from dedicated table)
+                    const { data: sets, error: setsErr } = await _supabase.from('settings').select('*').single();
+                    if (sets) state.settings = sets;
+
                 } catch (err) {
                     console.error("Fetch Error:", err);
                 }
@@ -563,7 +567,7 @@
                         <div class="relative h-48 overflow-hidden">
                             <img src="${p.img}" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500" onerror="this.src='https://via.placeholder.com/400x300?text=Rasm+yoq'">
                             <div class="absolute inset-0 bg-black bg-opacity-20 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
-                                <button onclick="app.addToCart(${p.id})" class="bg-white text-primary px-4 py-2 rounded-full font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition duration-300">
+                                <button onclick="app.addToCart(${p.id})" class="bg-white text-primary px-4 py-2 rounded-full font-bold shadow-lg transform translate-y-4 group-hover:translate-y-0 transition duration-300"> 
                                     <i class="fa-solid fa-cart-plus"></i> Qo'shish
                                 </button>
                             </div>
@@ -591,7 +595,7 @@
                     }
                 });
                 const grid = document.getElementById('products-section');
-                const filtered = catId === 'all' ? state.products : state.products.filter(p => p.cat_id == catId);
+                const filtered = catId === 'all' ? state.products : state.products.filter(p => p.cat_id == catId); 
                 app.renderProductCards(grid, filtered);
             },
 
@@ -669,14 +673,24 @@
                 content.innerHTML = html;
             },
 
+            renderAdminSettings: () => {
+                const s = state.settings;
+                const content = document.getElementById('admin-content');
+                content.innerHTML = `
+                    <h2 class="text-xl font-bold mb-6">Tizim sozlamalari</h2>
+                    <div class="max-w-md space-y-4">
+                        <div><label class="block font-bold mb-1 text-sm">Aloqa raqami</label><input type="text" id="set-phone" value="${s.phone}" class="w-full border p-2 rounded focus:ring-2 focus:ring-primary outline-none"></div>
+                        <div><label class="block font-bold mb-1 text-sm">Telegram profil (@-siz)</label><input type="text" id="set-tg" value="${s.telegram_user}" class="w-full border p-2 rounded focus:ring-2 focus:ring-primary outline-none"></div>
+                        <button onclick="app.saveSettings()" class="w-full bg-primary text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-secondary transition">Saqlash</button>
+                    </div>
+                `;
+            },
+
             renderAdminOrders: async () => {
                 const content = document.getElementById('admin-content');
                 content.innerHTML = '<div class="loader mx-auto mt-10"></div>';
 
-                const response = await fetch(`${API_BASE}/api/orders`, {
-                    headers: { 'X-Admin-Password': state.user.password }
-                });
-                const orders = await response.json();
+                const { data: orders, error } = await _supabase.from('orders').select('*').order('created_at', { ascending: false });
 
                 let html = `<h2 class="text-xl font-bold mb-6">Buyurtmalar tarixi</h2>`;
                 if (!orders || orders.length === 0) {
@@ -708,7 +722,7 @@
                                     <div>
                                         <div class="text-sm font-semibold text-gray-700 mb-1">Buyurtma tarkibi:</div>
                                         <ul class="text-sm space-y-1 mb-2 bg-gray-50 p-2 rounded">
-                                            ${o.items.map(i => `<li>• ${i.name} x ${i.qty}</li>`).join('')}
+                                            ${JSON.parse(o.items || '[]').map(i => `<li>• ${i.name} x ${i.qty}</li>`).join('')}
                                         </ul>
                                         <div class="font-bold text-right text-lg border-t pt-2 text-primary">${parseInt(o.total).toLocaleString()} so'm</div>
                                         ${completeBtn}
@@ -722,53 +736,18 @@
                 content.innerHTML = html;
             },
 
-            renderAdminSettings: () => {
-                const s = state.settings;
-                const content = document.getElementById('admin-content');
-                content.innerHTML = `
-                    <h2 class="text-xl font-bold mb-6">Tizim sozlamalari</h2>
-                    <div class="max-w-md space-y-4">
-                        <div><label class="block font-bold mb-1 text-sm">Aloqa raqami</label><input type="text" id="set-phone" value="${s.phone}" class="w-full border p-2 rounded focus:ring-2 focus:ring-primary outline-none"></div>
-                        <div><label class="block font-bold mb-1 text-sm">Telegram profil (@-siz)</label><input type="text" id="set-tg" value="${s.telegram_user}" class="w-full border p-2 rounded focus:ring-2 focus:ring-primary outline-none"></div>
-                        <div class="bg-blue-50 p-4 rounded-xl border border-blue-100 shadow-inner">
-                            <label class="block font-bold mb-1 text-sm text-blue-800">Telegram Chat ID (Buyurtmalar uchun)</label>
-                            <input type="text" id="set-chat-id" value="${s.telegram_chat_id}" class="w-full border p-2 rounded focus:ring-2 focus:ring-blue-500 outline-none">
-                            <p class="text-[10px] text-blue-600 mt-1 italic">Hozirgi sozlama: ${ADMIN_CHAT_ID}</p>
-                        </div>
-                        <button onclick="app.saveSettings()" class="w-full bg-primary text-white px-6 py-3 rounded-lg font-bold shadow hover:bg-secondary transition">Saqlash</button>
-                    </div>
-                `;
-            },
-
             completeOrder: async (id) => {
                 if (!confirm("Haqiqatan ham buyurtma bajarildimi?")) return;
-
-                const response = await fetch(`${API_BASE}/api/orders/${id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Admin-Password': state.user.password
-                    },
-                    body: JSON.stringify({ status: 'completed' })
-                });
-                if (!response.ok) alert("Xatolik yuz berdi");
-                else {
-                    app.renderAdminOrders();
-                }
+                const { error } = await _supabase.from('orders').update({ status: 'completed' }).eq('id', id);
+                if (error) alert("Xatolik: " + error.message);
+                else app.renderAdminOrders();
             },
 
             addCategory: async () => {
                 const name = document.getElementById('new-cat-name').value;
                 if (!name) return;
-                const response = await fetch(`${API_BASE}/api/categories`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Admin-Password': state.user.password
-                    },
-                    body: JSON.stringify({ name })
-                });
-                if (!response.ok) alert("Xatolik");
+                const { error } = await _supabase.from('categories').insert([{ name }]);
+                if (error) alert("Xatolik");
                 else { await app.fetchData(); app.renderAdminCategories(); }
             },
 
@@ -776,54 +755,15 @@
                 const cat = state.categories.find(c => c.id == id);
                 const newName = prompt("Yangi nom:", cat.name);
                 if (newName && newName !== cat.name) {
-                    await fetch(`${API_BASE}/api/categories/${id}`, {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Admin-Password': state.user.password
-                        },
-                        body: JSON.stringify({ name: newName })
-                    });
+                    await _supabase.from('categories').update({ name: newName }).eq('id', id);
                     await app.fetchData(); app.renderAdminCategories();
                 }
             },
 
             deleteCategory: async (id) => {
-                if (!confirm("Bo'limni o'chirsangiz, unga tegishli mahsulotlar ko'rinmay qolishi mumkin. O'chirilsinmi?")) return;
-                await fetch(`${API_BASE}/api/categories/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'X-Admin-Password': state.user.password }
-                });
+                if (!confirm("O'chirilsinmi?")) return;
+                await _supabase.from('categories').delete().eq('id', id);
                 await app.fetchData(); app.renderAdminCategories();
-            },
-
-            showProductForm: (id = null) => {
-                const modal = document.getElementById('product-form-modal');
-                const title = document.getElementById('pf-title');
-                const catSelect = document.getElementById('pf-cat');
-
-                catSelect.innerHTML = `<option value="">Bo'limni tanlang</option>`;
-                state.categories.forEach(c => catSelect.innerHTML += `<option value="${c.id}">${c.name}</option>`);
-
-                if (id) {
-                    const p = state.products.find(x => x.id === id);
-                    document.getElementById('pf-id').value = p.id;
-                    document.getElementById('pf-name').value = p.name;
-                    document.getElementById('pf-price').value = p.price;
-                    document.getElementById('pf-img').value = p.img;
-                    document.getElementById('pf-desc').value = p.description || '';
-                    catSelect.value = p.cat_id;
-                    title.innerText = "Tahrirlash";
-                } else {
-                    document.getElementById('pf-id').value = '';
-                    document.getElementById('pf-name').value = '';
-                    document.getElementById('pf-price').value = '';
-                    document.getElementById('pf-img').value = '';
-                    document.getElementById('pf-desc').value = '';
-                    catSelect.value = '';
-                    title.innerText = "Yangi mahsulot qo'shish";
-                }
-                modal.classList.remove('hidden');
             },
 
             saveProduct: async (e) => {
@@ -836,31 +776,20 @@
                     img: document.getElementById('pf-img').value,
                     description: document.getElementById('pf-desc').value
                 };
-                if (id) data.id = parseInt(id);
+                let res;
+                if (id) res = await _supabase.from('products').update(data).eq('id', parseInt(id));
+                else res = await _supabase.from('products').insert([data]);
 
-                const response = await fetch(`${API_BASE}/api/products`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Admin-Password': state.user.password
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (!response.ok) alert("Xatolik");
+                if (res.error) alert("Xatolik: " + res.error.message);
                 else {
                     document.getElementById('product-form-modal').classList.add('hidden');
-                    await app.fetchData();
-                    app.renderAdminProducts();
+                    await app.fetchData(); app.renderAdminProducts();
                 }
             },
 
             deleteProduct: async (id) => {
-                if (confirm("Haqiqatan ham ushbu mahsulotni o'chirmoqchimisiz?")) {
-                    await fetch(`${API_BASE}/api/products/${id}`, {
-                        method: 'DELETE',
-                        headers: { 'X-Admin-Password': state.user.password }
-                    });
+                if (confirm("O'chirmoqchimisiz?")) {
+                    await _supabase.from('products').delete().eq('id', id);
                     await app.fetchData(); app.renderAdminProducts();
                 }
             },
@@ -870,22 +799,9 @@
                     phone: document.getElementById('set-phone').value,
                     telegram_user: document.getElementById('set-tg').value
                 };
-
-                const response = await fetch(`${API_BASE}/api/settings`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Admin-Password': state.user.password
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                if (!response.ok) alert("Xatolik");
-                else {
-                    state.settings = data;
-                    app.updateContactInfo();
-                    alert("Sozlamalar saqlandi!");
-                }
+                const { error } = await _supabase.from('settings').update(data).eq('id', state.settings.id);
+                if (error) alert("Xatolik");
+                else { state.settings = { ...state.settings, ...data }; app.updateContactInfo(); alert("Saqlandi!"); }
             },
 
             handleLogin: async (e) => {
@@ -893,27 +809,14 @@
                 const name = document.getElementById('login-name').value;
                 const password = document.getElementById('login-phone').value;
 
-                try {
-                    const response = await fetch(`${API_BASE}/api/login`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ name, password })
-                    });
-                    const res = await response.json();
-
-                    if (res.status === 'success') {
-                        if (res.role === 'admin') {
-                            state.user = { name: 'Admin', role: 'admin', password: res.password };
-                        } else {
-                            state.user = { name: res.name || name, role: 'user', phone: res.phone || password };
-                        }
-                        localStorage.setItem('jalyuziUser', JSON.stringify(state.user));
-                        app.navigate(res.role === 'admin' ? 'admin' : 'home');
-                        app.checkAuth();
-                    }
-                } catch (err) {
-                    console.error("Login error:", err);
+                if (name.toLowerCase() === 'admin' && password === ADMIN_PASSWORD_VAL) {
+                    state.user = { name: 'Admin', role: 'admin' };
+                } else {
+                    state.user = { name: name, role: 'user', phone: password };
                 }
+                localStorage.setItem('jalyuziUser', JSON.stringify(state.user));
+                app.navigate(state.user.role === 'admin' ? 'admin' : 'home');
+                app.checkAuth();
             },
 
             addToCart: (id) => {
@@ -974,7 +877,6 @@
             submitOrder: async (e) => {
                 e.preventDefault();
                 const btn = e.target.querySelector('button[type="submit"]');
-                const originalText = btn.innerText;
                 btn.disabled = true; btn.innerText = "Yuborilmoqda...";
 
                 const order = {
@@ -982,38 +884,39 @@
                     client_phone: document.getElementById('order-phone').value,
                     region: document.getElementById('order-region').value,
                     address: document.getElementById('order-address').value,
-                    items: state.cart.map(i => ({ name: i.name, qty: i.qty, price: i.price })),
+                    items: JSON.stringify(state.cart.map(i => ({ name: i.name, qty: i.qty, price: i.price }))),
                     total: state.cart.reduce((a, b) => a + (b.price * b.qty), 0),
                     status: 'new'
                 };
 
                 try {
-                    const response = await fetch(`${API_BASE}/api/order`, {
+                    // Save to Supabase
+                    const { data, error } = await _supabase.from('orders').insert([order]).select();
+                    if (error) throw error;
+                    const orderId = data[0].id;
+
+                    // Send Telegram Alert
+                    const itemsList = state.cart.map(i => `▫️ ${i.name} (${i.qty} x ${parseInt(i.price).toLocaleString()})`).join('\n');
+                    const msg = `📦 <b>Yangi Buyurtma: #${orderId}</b>\n\n👤 <b>Mijoz:</b> ${order.client_name}\n📞 <b>Tel:</b> ${order.client_phone}\n📍 <b>Manzil:</b> ${order.region}, ${order.address}\n\n🛒 <b>Mahsulotlar:</b>\n${itemsList}\n\n💰 <b>Jami: ${parseInt(order.total).toLocaleString()} so'm</b>`;
+
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(order)
+                        body: JSON.stringify({ chat_id: ADMIN_CHAT_ID, text: msg, parse_mode: 'HTML' })
                     });
-                    const res = await response.json();
 
-                    if (res.status === 'success') {
-                        state.cart = [];
-                        localStorage.setItem('jalyuziCart', '[]');
-                        app.closeCheckout();
-                        alert("Buyurtmangiz muvaffaqiyatli qabul qilindi! Tez orada bog'lanamiz.");
-                        app.navigate('home');
-                        app.updateCartCount();
-                    } else {
-                        alert("Xatolik: " + (res.detail || "Noma'lum xatolik"));
-                        btn.disabled = false; btn.innerText = originalText;
-                    }
+                    state.cart = [];
+                    localStorage.setItem('jalyuziCart', '[]');
+                    app.updateCartCount();
+                    app.closeCheckout();
+                    alert("Buyurtmangiz qabul qilindi! Tez orada bog'lanamiz.");
+                    app.navigate('home');
                 } catch (err) {
-                    console.error("Order error:", err);
-                    btn.disabled = false; btn.innerText = originalText;
+                    console.error(err);
+                    alert("Xatolik yuz berdi. Iltimos qaytadan urinib ko'ring.");
+                } finally {
+                    btn.disabled = false; btn.innerText = "Tasdiqlash";
                 }
-            },
-
-            sendToTelegram: async (order) => {
-                // Now handled by the backend!
             },
 
             switchAdminTab: (tab) => {
